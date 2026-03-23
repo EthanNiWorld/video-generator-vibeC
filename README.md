@@ -19,8 +19,8 @@
 
 1. 克隆仓库
    ```bash
-   git clone https://github.com/yourusername/video-generator.git
-   cd video-generator
+   git clone https://github.com/EthanNiWorld/video-generator-Ethan.git
+   cd video-generator-Ethan
    ```
 
 2. 创建虚拟环境
