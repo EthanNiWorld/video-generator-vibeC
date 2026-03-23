@@ -1,0 +1,271 @@
+# English translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-03-22 01:16+0800\n"
+"PO-Revision-Date: 2026-03-22 01:15+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: src/templates/home.html:6
+msgid "Video Generator - AI Video Creation Platform"
+msgstr ""
+
+#: src/templates/home.html:418
+msgid "Video Generator"
+msgstr ""
+
+#: src/templates/home.html:420
+msgid "Welcome,"
+msgstr ""
+
+#: src/templates/home.html:429
+msgid "Admin Panel"
+msgstr ""
+
+#: src/templates/home.html:431
+msgid "Logout"
+msgstr ""
+
+#: src/templates/home.html:447
+msgid "Task Information"
+msgstr ""
+
+#: src/templates/home.html:451
+msgid "Model:"
+msgstr ""
+
+#: src/templates/home.html:452
+msgid "Task ID:"
+msgstr ""
+
+#: src/templates/home.html:453
+msgid "Status:"
+msgstr ""
+
+#: src/templates/home.html:470 src/templates/home.html:571
+msgid "Generate Video"
+msgstr ""
+
+#: src/templates/home.html:473 src/templates/home.html:637
+msgid "Prompt"
+msgstr ""
+
+#: src/templates/home.html:474
+msgid "Enter a detailed description of the video you want to generate."
+msgstr ""
+
+#: src/templates/home.html:476
+msgid "Describe your video in detail..."
+msgstr ""
+
+#: src/templates/home.html:477
+msgid ""
+"Example: \"A cat playing with a ball in a sunny garden, with butterflies "
+"flying around.\""
+msgstr ""
+
+#: src/templates/home.html:481
+msgid "Model Selection"
+msgstr ""
+
+#: src/templates/home.html:482
+msgid "Choose how to select models for video generation."
+msgstr ""
+
+#: src/templates/home.html:487
+msgid "Single Model"
+msgstr ""
+
+#: src/templates/home.html:491
+msgid "Multiple Models"
+msgstr ""
+
+#: src/templates/home.html:498
+msgid "Select Model"
+msgstr ""
+
+#: src/templates/home.html:499
+msgid "Choose the video generation model."
+msgstr ""
+
+#: src/templates/home.html:502 src/templates/home.html:504
+#: src/templates/home.html:506 src/templates/home.html:507
+msgid "Text to Video"
+msgstr ""
+
+#: src/templates/home.html:503
+msgid "Text to Video, Faster"
+msgstr ""
+
+#: src/templates/home.html:505
+msgid "Image to Video"
+msgstr ""
+
+#: src/templates/home.html:509
+msgid ""
+"Text to Video: Generate video from text description. Image to Video: "
+"Generate video from uploaded image."
+msgstr ""
+
+#: src/templates/home.html:514
+msgid "Select Models"
+msgstr ""
+
+#: src/templates/home.html:515
+msgid "Select multiple models to test with the same prompt."
+msgstr ""
+
+#: src/templates/home.html:539
+msgid "Select multiple models to test the same prompt across different models."
+msgstr ""
+
+#: src/templates/home.html:543
+msgid "Video Duration"
+msgstr ""
+
+#: src/templates/home.html:544
+msgid "Select the length of the generated video."
+msgstr ""
+
+#: src/templates/home.html:549
+msgid "10 seconds (Default)"
+msgstr ""
+
+#: src/templates/home.html:553
+msgid "5 seconds"
+msgstr ""
+
+#: src/templates/home.html:557
+msgid "15 seconds"
+msgstr ""
+
+#: src/templates/home.html:560
+msgid ""
+"If the selected duration is not supported by the API, it will default to "
+"10 seconds."
+msgstr ""
+
+#: src/templates/home.html:564
+msgid "Upload Image"
+msgstr ""
+
+#: src/templates/home.html:565
+msgid "Upload an image to generate video from."
+msgstr ""
+
+#: src/templates/home.html:568
+msgid "Supported formats: JPG, PNG, GIF. Recommended size: 800x600px."
+msgstr ""
+
+#: src/templates/home.html:579
+msgid "Submitting request..."
+msgstr ""
+
+#: src/templates/home.html:580
+msgid "Video generation typically takes 1-5 minutes. Please be patient."
+msgstr ""
+
+#: src/templates/home.html:585
+msgid "How It Works"
+msgstr ""
+
+#: src/templates/home.html:588
+msgid "1. Enter Prompt"
+msgstr ""
+
+#: src/templates/home.html:589
+msgid "Describe the video you want to generate in detail."
+msgstr ""
+
+#: src/templates/home.html:592
+msgid "2. Choose Model"
+msgstr ""
+
+#: src/templates/home.html:593
+msgid "Select the appropriate video generation model."
+msgstr ""
+
+#: src/templates/home.html:596
+msgid "3. Generate Video"
+msgstr ""
+
+#: src/templates/home.html:597
+msgid "Wait for the AI to generate your video."
+msgstr ""
+
+#: src/templates/home.html:603
+msgid "Video Generation History"
+msgstr ""
+
+#: src/templates/home.html:607 src/templates/home.html:638
+msgid "Model"
+msgstr ""
+
+#: src/templates/home.html:609
+msgid "All Models"
+msgstr ""
+
+#: src/templates/home.html:619
+msgid "Date"
+msgstr ""
+
+#: src/templates/home.html:623
+msgid "Keyword"
+msgstr ""
+
+#: src/templates/home.html:624
+msgid "Search in prompt"
+msgstr ""
+
+#: src/templates/home.html:627
+msgid "Filter"
+msgstr ""
+
+#: src/templates/home.html:628
+msgid "Reset"
+msgstr ""
+
+#: src/templates/home.html:636
+msgid "Preview"
+msgstr ""
+
+#: src/templates/home.html:639
+msgid "Generated At"
+msgstr ""
+
+#: src/templates/home.html:640
+msgid "Video"
+msgstr ""
+
+#: src/templates/home.html:650
+msgid "No Preview"
+msgstr ""
+
+#: src/templates/home.html:659
+msgid "View"
+msgstr ""
+
+#: src/templates/home.html:660
+msgid "Download"
+msgstr ""
+
+#: src/templates/home.html:663
+msgid "N/A"
+msgstr ""
+
+#: src/templates/home.html:669
+msgid "No video generation history yet."
+msgstr ""
+

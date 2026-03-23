@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="{{ g.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ _('About - Video Generator') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header tech-glow">
+            <h1>Video Generator <span style="font-size: 1rem; font-weight: 400; color: var(--gray-color); margin-left: 10px;">by Vibe Coding</span></h1>
+            <div class="user-menu">
+                {% if current_user.is_authenticated %}
+                <span>Welcome, {{ current_user.username }}</span>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                {% endif %}
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="card tech-glow">
+                <h2>About Video Generator</h2>
+                <div style="line-height: 1.8;">
+                    <p>Video Generator is a testing tool for AI-powered video creation, allowing users to test video generation from text prompts and images using various AI models. <strong>Please note:</strong> This is a testing tool, please pay attention to compliance and security.</p>
+                    
+                    <h3 style="margin-top: 30px; color: var(--primary-color);">Key Features</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Text-to-video generation using multiple AI models</li>
+                        <li>Image-to-video generation for creating videos from images</li>
+                        <li>Support for multiple AI models including wan, doubao, and seedance</li>
+                        <li>Real-time progress tracking during video generation</li>
+                        <li>Video history management and preview</li>
+                        <li>Admin panel for system monitoring and user management</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 30px; color: var(--primary-color);">Supported Models</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>wan2.6-t2v</strong>: Text-to-video model with high quality output</li>
+                        <li><strong>wan2.6-t2v-flash</strong>: Faster text-to-video model</li>
+                        <li><strong>wan2.5-t2v-preview</strong>: Preview version of text-to-video model</li>
+                        <li><strong>wan2.6-i2v</strong>: Image-to-video model</li>
+                        <li><strong>doubao-seedance-1-5-pro</strong>: Doubao's image-to-video model</li>
+                        <li><strong>seedance2.0</strong>: Seedance's video generation model</li>
+                        <li><strong>keling</strong>: Keling's video generation model</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 30px; color: var(--primary-color);">How It Works</h3>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>Enter a detailed text prompt describing the video you want to generate</li>
+                        <li>Select the appropriate AI model based on your needs</li>
+                        <li>For image-to-video models, upload an image or provide an image URL</li>
+                        <li>Click the "Generate Video" button</li>
+                        <li>Wait for the AI to generate your video (typically 1-5 minutes)</li>
+                        <li>View and download your generated video from the history page</li>
+                    </ol>
+                    
+                    <h3 style="margin-top: 30px; color: var(--primary-color);">System Requirements</h3>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Modern web browser (Chrome, Firefox, Safari, Edge)</li>
+                        <li>Stable internet connection</li>
+                        <li>For optimal performance, use a device with at least 4GB RAM</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 30px; color: var(--primary-color);">Contact & Support</h3>
+                    <p>If you have any questions or need support, please contact the system administrator.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; color: var(--gray-color); font-size: 14px;">
+        <p>Created with Vibe Coding Tool by Ethan</p>
+        <p>如有问题请提交到 <a href="https://github.com/EthanNiWorld/video-generator-Ethan" target="_blank" style="color: var(--secondary-color); text-decoration: none;">git@github.com:EthanNiWorld/video-generator-Ethan.git</a></p>
+    </footer>
+    
+    <script>
+        // 添加页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

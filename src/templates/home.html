@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="{{ g.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ _('Video Generator - AI Video Creation Platform') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --accent-color: #FF9800;
+            --dark-color: #212121;
+            --light-color: #f5f5f5;
+            --gray-color: #9e9e9e;
+            --success-color: #4CAF50;
+            --info-color: #2196F3;
+            --warning-color: #FF9800;
+            --error-color: #f44336;
+        }
+        
+        body {
+            font-family: 'Roboto', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-menu span {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+        }
+        
+        .card h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        /* 进度条样式 */
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(240, 240, 240, 0.8);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: var(--gray-color);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-group textarea,
+        .form-group select,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+        
+        /* 状态消息样式 */
+        .status-message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-message.success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .status-message.info {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--info-color);
+            border-left: 4px solid var(--info-color);
+        }
+        
+        .status-message.warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning-color);
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .status-message.error {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--error-color);
+            border-left: 4px solid var(--error-color);
+        }
+        
+        /* 使用次数样式 */
+        .usage-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .usage-info p {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark-color);
+            margin: 0;
+        }
+        
+        /* 提示信息样式 */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* 科技风格元素 */
+        .tech-glow {
+            position: relative;
+        }
+        
+        .tech-glow::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
+            border-radius: 16px;
+            z-index: -1;
+            animation: glowing 10s linear infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .user-menu {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .user-menu a {
+                width: 100%;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+        
+        /* 按钮动画 */
+        .btn-animated {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-animated::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-animated:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        /* 表单提交按钮 */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        
+        /* 提示文本 */
+        .hint-text {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        /* 模型选择样式 */
+        .model-option {
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .model-option:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header tech-glow">
+            <h1>{{ _('Video Generator') }} <span style="font-size: 1rem; font-weight: 400; color: var(--gray-color); margin-left: 10px;">by Vibe Coding</span></h1>
+            <div class="user-menu">
+                <span>{{ _('Welcome,') }} {{ current_user.username }}</span>
+                <form action="{{ url_for('set_language') }}" method="post" style="display: inline;">
+                    <select name="language" onchange="this.form.submit()" style="padding: 6px; border: 1px solid #e0e0e0; border-radius: 4px; margin: 0 10px;">
+                        <option value="zh" {% if get_locale() == 'zh' %}selected{% endif %}>中文</option>
+                        <option value="en" {% if get_locale() == 'en' %}selected{% endif %}>English</option>
+                        <option value="yue" {% if get_locale() == 'yue' %}selected{% endif %}>粵語</option>
+                    </select>
+                </form>
+                <a href="{{ url_for('about') }}" class="btn btn-secondary">{{ _('About') }}</a>
+                {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('admin') }}" class="btn btn-secondary">{{ _('Admin Panel') }}</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">{{ _('Logout') }}</a>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="status-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <!-- 任务信息显示 -->
+            {% if session.get('task_info') %}
+                <div class="card">
+                    <h2>{{ _('Task Information') }}</h2>
+                    <div style="margin-top: 20px;">
+                        {% for task in session['task_info'] %}
+                            <div class="status-message {% if task.success %}success{% else %}error{% endif %}">
+                                <strong>{{ _('Model:') }}</strong> {{ task.model }}<br>
+                                <strong>{{ _('Task ID:') }}</strong> {{ task.task_id }}<br>
+                                <strong>{{ _('Status:') }}</strong> {{ task.status }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- 清除任务信息，避免刷新页面后重复显示 -->
+                <script>
+                    // 页面加载后清除任务信息
+                    window.addEventListener('load', function() {
+                        fetch('{{ url_for('clear_task_info') }}')
+                            .then(response => response.json())
+                            .catch(error => console.error('Error clearing task info:', error));
+                    });
+                </script>
+            {% endif %}
+            
+            <div class="card generate-card tech-glow">
+                <h2>{{ _('Generate Video') }}</h2>
+                <form id="generate-form" method="POST" action="{{ url_for('generate') }}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="prompt">{{ _('Prompt') }} <span class="tooltip">❓
+                            <span class="tooltiptext">{{ _('Enter a detailed description of the video you want to generate.') }}</span>
+                        </span></label>
+                        <textarea id="prompt" name="prompt" rows="4" placeholder="{{ _('Describe your video in detail...') }}" required></textarea>
+                        <p class="hint-text">{{ _('Example: "A cat playing with a ball in a sunny garden, with butterflies flying around."') }}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>{{ _('Model Selection') }} <span class="tooltip">❓
+                            <span class="tooltiptext">{{ _('Choose how to select models for video generation.') }}</span>
+                        </span></label>
+                        <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="model_selection" value="single" checked style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">{{ _('Single Model') }}</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="model_selection" value="multiple" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">{{ _('Multiple Models') }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 单模型选择 -->
+                    <div class="form-group" id="single_model_container">
+                        <label>{{ _('Select Model') }} <span class="tooltip">❓
+                            <span class="tooltiptext">{{ _('Choose the video generation model.') }}</span>
+                        </span></label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="model" value="wan2.6-t2v" checked style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.6-t2v ({{ _('Text to Video') }})</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="model" value="wan2.6-t2v-flash" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.6-t2v-flash ({{ _('Text to Video, Faster') }})</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="model" value="wan2.5-t2v-preview" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.5-t2v-preview ({{ _('Text to Video') }})</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="model" value="wan2.6-i2v" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.6-i2v ({{ _('Image to Video') }})</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="model" value="doubao-seedance-1-5-pro" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">doubao-seedance-1-5-pro ({{ _('Image to Video') }})</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: not-allowed; transition: all 0.3s ease; background-color: rgba(240, 240, 240, 0.8);">
+                                <input type="radio" name="model" value="seedance2.0" disabled style="cursor: not-allowed; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--gray-color);">seedance2.0 (to be released)</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: not-allowed; transition: all 0.3s ease; background-color: rgba(240, 240, 240, 0.8);">
+                                <input type="radio" name="model" value="keling" disabled style="cursor: not-allowed; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--gray-color);">keling (to be released)</span>
+                            </label>
+                        </div>
+                        <p class="hint-text">{{ _('Text to Video: Generate video from text description. Image to Video: Generate video from uploaded image.') }}</p>
+                    </div>
+                    
+                    <!-- 多模型选择 -->
+                    <div class="form-group" id="multiple_models_container" style="display: none;">
+                        <label>{{ _('Select Models') }} <span class="tooltip">❓
+                            <span class="tooltiptext">{{ _('Select multiple models to test with the same prompt.') }}</span>
+                        </span></label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="wan2.6-t2v" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.6-t2v</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="wan2.6-t2v-flash" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.6-t2v-flash</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="wan2.5-t2v-preview" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.5-t2v-preview</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="wan2.6-i2v" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">wan2.6-i2v</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: not-allowed; transition: all 0.3s ease; background-color: rgba(240, 240, 240, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="seedance2.0" disabled style="cursor: not-allowed; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--gray-color);">seedance2.0 (to be released)</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: not-allowed; transition: all 0.3s ease; background-color: rgba(240, 240, 240, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="keling" disabled style="cursor: not-allowed; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--gray-color);">keling (to be released)</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="checkbox" name="multiple_models" value="doubao-seedance-1-5-pro" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">doubao-seedance-1-5-pro</span>
+                            </label>
+                        </div>
+                        <p class="hint-text" style="margin-top: 15px;">{{ _('Select multiple models to test the same prompt across different models.') }}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>{{ _('Video Duration') }} <span class="tooltip">❓
+                            <span class="tooltiptext">{{ _('Select the length of the generated video.') }}</span>
+                        </span></label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="duration" value="10" checked style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">{{ _('10 seconds (Default)') }}</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="duration" value="5" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">{{ _('5 seconds') }}</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.8);">
+                                <input type="radio" name="duration" value="15" style="cursor: pointer; width: 16px; height: 16px;">
+                                <span style="font-weight: 500; color: var(--dark-color);">{{ _('15 seconds') }}</span>
+                            </label>
+                        </div>
+                        <p class="hint-text" style="margin-top: 15px;">{{ _('If the selected duration is not supported by the API, it will default to 10 seconds.') }}</p>
+                    </div>
+                    
+                    <div class="form-group" id="image-upload" style="display: none;">
+                        <label for="image">{{ _('Upload Image') }} <span class="tooltip">❓
+                            <span class="tooltiptext">{{ _('Upload an image to generate video from.') }}</span>
+                        </span></label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                        <p class="hint-text">{{ _('Supported formats: JPG, PNG, GIF. Recommended size: 800x600px.') }}</p>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-animated submit-btn">{{ _('Generate Video') }}</button>
+                </form>
+                
+                <!-- 进度显示区域 -->
+                <div id="progress-container" class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div id="progress-text" class="progress-text">{{ _('Submitting request...') }}</div>
+                    <p class="hint-text">{{ _('Video generation typically takes 1-5 minutes. Please be patient.') }}</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>{{ _('How It Works') }}</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <h3 style="font-size: 1.2rem; color: var(--primary-color); margin-bottom: 10px;">{{ _('1. Enter Prompt') }}</h3>
+                        <p style="color: var(--gray-color);">{{ _('Describe the video you want to generate in detail.') }}</p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h3 style="font-size: 1.2rem; color: var(--secondary-color); margin-bottom: 10px;">{{ _('2. Choose Model') }}</h3>
+                        <p style="color: var(--gray-color);">{{ _('Select the appropriate video generation model.') }}</p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h3 style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 10px;">{{ _('3. Generate Video') }}</h3>
+                        <p style="color: var(--gray-color);">{{ _('Wait for the AI to generate your video.') }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card tech-glow">
+                <h2>{{ _('Video Generation History') }}</h2>
+                <form method="GET" action="{{ url_for('home') }}" style="margin-bottom: 20px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label for="model_filter" style="display: block; margin-bottom: 5px; font-weight: 500; color: var(--dark-color);">{{ _('Model') }}</label>
+                            <select id="model_filter" name="model_filter" style="width: 100%; padding: 8px; border: 1px solid #e0e0e0; border-radius: 6px;">
+                                <option value="">{{ _('All Models') }}</option>
+                                <option value="wan2.6-t2v">wan2.6-t2v</option>
+                                <option value="wan2.6-t2v-flash">wan2.6-t2v-flash</option>
+                                <option value="wan2.5-t2v-preview">wan2.5-t2v-preview</option>
+                                <option value="wan2.6-i2v">wan2.6-i2v</option>
+                                <option value="doubao-seedance-1-5-pro">doubao-seedance-1-5-pro</option>
+                                <option value="seedance2.0">seedance2.0</option>
+                                <option value="keling">keling</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label for="date_filter" style="display: block; margin-bottom: 5px; font-weight: 500; color: var(--dark-color);">{{ _('Date') }}</label>
+                            <input type="date" id="date_filter" name="date_filter" style="width: 100%; padding: 8px; border: 1px solid #e0e0e0; border-radius: 6px;">
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label for="keyword_filter" style="display: block; margin-bottom: 5px; font-weight: 500; color: var(--dark-color);">{{ _('Keyword') }}</label>
+                            <input type="text" id="keyword_filter" name="keyword_filter" placeholder="{{ _('Search in prompt') }}" style="width: 100%; padding: 8px; border: 1px solid #e0e0e0; border-radius: 6px;">
+                        </div>
+                        <div style="display: flex; align-items: flex-end;">
+                            <button type="submit" class="btn btn-primary" style="padding: 8px 16px;">{{ _('Filter') }}</button>
+                            <a href="{{ url_for('home') }}" class="btn btn-secondary" style="margin-left: 10px; padding: 8px 16px;">{{ _('Reset') }}</a>
+                        </div>
+                    </div>
+                </form>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                        <thead>
+                            <tr>
+                                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ _('Preview') }}</th>
+                                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ _('Prompt') }}</th>
+                                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ _('Model') }}</th>
+                                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ _('Generated At') }}</th>
+                                <th style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ _('Video') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for video in user_videos %}
+                            <tr style="transition: background-color 0.3s ease;">
+                                <td style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0;">
+                                    {% if video.thumbnail_path %}
+                                        <img src="{{ url_for('static', filename='videos/' + video.thumbnail_path) }}" style="width: 80px; height: 45px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    {% else %}
+                                        <div style="width: 80px; height: 45px; background-color: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999;">{{ _('No Preview') }}</div>
+                                    {% endif %}
+                                </td>
+                                <td style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0;">{{ video.prompt[:50] }}{% if video.prompt|length > 50 %}...{% endif %}</td>
+                                <td style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0;">{{ video.video_path.split('_')[0] }}</td>
+                                <td style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0;">{{ video.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td style="padding: 15px; text-align: left; border-bottom: 1px solid #e0e0e0;">
+                                    {% if video.video_path %}
+                                        <div style="display: flex; gap: 10px;">
+                                            <a href="{{ url_for('static', filename='videos/' + video.video_path) }}" target="_blank" style="color: var(--secondary-color); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">{{ _('View') }}</a>
+                                            <a href="{{ url_for('static', filename='videos/' + video.video_path) }}" download style="color: var(--primary-color); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">{{ _('Download') }}</a>
+                                        </div>
+                                    {% else %}
+                                        {{ _('N/A') }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" style="padding: 20px; text-align: center; border-bottom: 1px solid #e0e0e0; color: var(--gray-color);">{{ _('No video generation history yet.') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; color: var(--gray-color); font-size: 14px;">
+        <p>Created with Vibe Coding Tool by Ethan</p>
+        <p>如有问题请提交到 <a href="https://github.com/EthanNiWorld/video-generator-Ethan" target="_blank" style="color: var(--secondary-color); text-decoration: none;">git@github.com:EthanNiWorld/video-generator-Ethan.git</a></p>
+    </footer>
+    
+    <script>
+        // 定义支持图片上传的模型列表
+        const imageUploadModels = ['wan2.6-i2v', 'doubao-seedance-1-5-pro'];
+        
+        // 监听模型选择变化
+        document.querySelectorAll('input[name="model"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                const imageUpload = document.getElementById('image-upload');
+                if (imageUploadModels.includes(this.value)) {
+                    imageUpload.style.display = 'block';
+                } else {
+                    imageUpload.style.display = 'none';
+                }
+            });
+        });
+        
+        // 初始化时检查当前选中的模型
+        const selectedModel = document.querySelector('input[name="model"]:checked');
+        if (selectedModel) {
+            const imageUpload = document.getElementById('image-upload');
+            if (imageUploadModels.includes(selectedModel.value)) {
+                imageUpload.style.display = 'block';
+            } else {
+                imageUpload.style.display = 'none';
+            }
+        }
+        
+        // 监听模型选择模式切换
+        document.querySelectorAll('input[name="model_selection"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                const singleModelContainer = document.getElementById('single_model_container');
+                const multipleModelsContainer = document.getElementById('multiple_models_container');
+                
+                if (this.value === 'single') {
+                    singleModelContainer.style.display = 'block';
+                    multipleModelsContainer.style.display = 'none';
+                    // 确保单模型选择是必填的
+                    document.getElementById('model').setAttribute('required', 'required');
+                } else {
+                    singleModelContainer.style.display = 'none';
+                    multipleModelsContainer.style.display = 'block';
+                    // 移除单模型选择的必填属性
+                    document.getElementById('model').removeAttribute('required');
+                }
+            });
+        });
+        
+        // 多模型选择时，检查是否包含支持图片上传的模型
+        document.querySelectorAll('input[name="multiple_models"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                const imageUpload = document.getElementById('image-upload');
+                let hasImageUploadModel = false;
+                
+                document.querySelectorAll('input[name="multiple_models"]:checked').forEach(function(checkedBox) {
+                    if (imageUploadModels.includes(checkedBox.value)) {
+                        hasImageUploadModel = true;
+                    }
+                });
+                
+                if (hasImageUploadModel) {
+                    imageUpload.style.display = 'block';
+                } else {
+                    // 检查当前是否选择的是多模型模式
+                    const modelSelection = document.querySelector('input[name="model_selection"]:checked').value;
+                    if (modelSelection === 'multiple') {
+                        imageUpload.style.display = 'none';
+                    }
+                }
+            });
+        });
+        
+        // 表单提交处理
+        document.getElementById('generate-form').addEventListener('submit', function(e) {
+            // 验证表单
+            const modelSelection = document.querySelector('input[name="model_selection"]:checked').value;
+            let hasImageUploadModel = false;
+            
+            if (modelSelection === 'single') {
+                const selectedModel = document.querySelector('input[name="model"]:checked');
+                if (selectedModel && imageUploadModels.includes(selectedModel.value)) {
+                    const imageInput = document.getElementById('image');
+                    if (!imageInput.files || imageInput.files.length === 0) {
+                        alert('Image is required for image-to-video models!');
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            } else {
+                // 多模型选择
+                document.querySelectorAll('input[name="multiple_models"]:checked').forEach(function(checkedBox) {
+                    if (imageUploadModels.includes(checkedBox.value)) {
+                        hasImageUploadModel = true;
+                    }
+                });
+                
+                if (hasImageUploadModel) {
+                    const imageInput = document.getElementById('image');
+                    if (!imageInput.files || imageInput.files.length === 0) {
+                        alert('Image is required for image-to-video models!');
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            }
+            
+            // 显示进度条
+            const progressContainer = document.getElementById('progress-container');
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            
+            progressContainer.style.display = 'block';
+            progressFill.style.width = '20%';
+            progressText.textContent = 'Submitting request...';
+            
+            // 模拟进度更新
+            setTimeout(() => {
+                progressFill.style.width = '40%';
+                progressText.textContent = 'Creating video generation task...';
+            }, 1000);
+            
+            setTimeout(() => {
+                progressFill.style.width = '60%';
+                progressText.textContent = 'AI is generating your video...';
+            }, 3000);
+            
+            setTimeout(() => {
+                progressFill.style.width = '80%';
+                progressText.textContent = 'Processing and downloading video...';
+            }, 5000);
+            
+            setTimeout(() => {
+                progressFill.style.width = '95%';
+                progressText.textContent = 'Almost done...';
+            }, 7000);
+            
+            // 注意：实际的视频生成可能需要1-5分钟，这里只是模拟进度
+        });
+        
+        // 添加页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

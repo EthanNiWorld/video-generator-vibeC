@@ -1,0 +1,271 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-03-22 01:16+0800\n"
+"PO-Revision-Date: 2026-03-22 01:15+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: src/templates/home.html:6
+msgid "Video Generator - AI Video Creation Platform"
+msgstr "视频生成器——AI视频创作平台"
+
+#: src/templates/home.html:418
+msgid "Video Generator"
+msgstr "视频生成器"
+
+#: src/templates/home.html:420
+msgid "Welcome,"
+msgstr "欢迎！"
+
+#: src/templates/home.html:429
+msgid "Admin Panel"
+msgstr "管理后台"
+
+#: src/templates/home.html:431
+msgid "Logout"
+msgstr "退出登录"
+
+#: src/templates/home.html:447
+msgid "Task Information"
+msgstr "任务信息"
+
+#: src/templates/home.html:451
+msgid "Model:"
+msgstr "模型："
+
+#: src/templates/home.html:452
+msgid "Task ID:"
+msgstr "任务ID："
+
+#: src/templates/home.html:453
+msgid "Status:"
+msgstr "状态："
+
+#: src/templates/home.html:470 src/templates/home.html:571
+msgid "Generate Video"
+msgstr "生成视频"
+
+#: src/templates/home.html:473 src/templates/home.html:637
+msgid "Prompt"
+msgstr "提示"
+
+#: src/templates/home.html:474
+msgid "Enter a detailed description of the video you want to generate."
+msgstr "请输入您希望生成的视频的详细描述。"
+
+#: src/templates/home.html:476
+msgid "Describe your video in detail..."
+msgstr "请详细描述您的视频……"
+
+#: src/templates/home.html:477
+msgid ""
+"Example: \"A cat playing with a ball in a sunny garden, with butterflies "
+"flying around.\""
+msgstr ""
+
+#: src/templates/home.html:481
+msgid "Model Selection"
+msgstr "模型选择"
+
+#: src/templates/home.html:482
+msgid "Choose how to select models for video generation."
+msgstr "选择视频生成所用模型的方式。"
+
+#: src/templates/home.html:487
+msgid "Single Model"
+msgstr "单模型"
+
+#: src/templates/home.html:491
+msgid "Multiple Models"
+msgstr "多种模型"
+
+#: src/templates/home.html:498
+msgid "Select Model"
+msgstr "选择模型"
+
+#: src/templates/home.html:499
+msgid "Choose the video generation model."
+msgstr "选择视频生成模型。"
+
+#: src/templates/home.html:502 src/templates/home.html:504
+#: src/templates/home.html:506 src/templates/home.html:507
+msgid "Text to Video"
+msgstr "文本生成视频"
+
+#: src/templates/home.html:503
+msgid "Text to Video, Faster"
+msgstr "文本生成视频，速度更快"
+
+#: src/templates/home.html:505
+msgid "Image to Video"
+msgstr "图片转视频"
+
+#: src/templates/home.html:509
+msgid ""
+"Text to Video: Generate video from text description. Image to Video: "
+"Generate video from uploaded image."
+msgstr ""
+
+#: src/templates/home.html:514
+msgid "Select Models"
+msgstr "选择模型"
+
+#: src/templates/home.html:515
+msgid "Select multiple models to test with the same prompt."
+msgstr "选择多个模型，使用同一提示词进行测试。"
+
+#: src/templates/home.html:539
+msgid "Select multiple models to test the same prompt across different models."
+msgstr "选择多个模型，以在不同模型上测试同一提示词。"
+
+#: src/templates/home.html:543
+msgid "Video Duration"
+msgstr "视频时长"
+
+#: src/templates/home.html:544
+msgid "Select the length of the generated video."
+msgstr "选择生成视频的时长。"
+
+#: src/templates/home.html:549
+msgid "10 seconds (Default)"
+msgstr "10秒（默认）"
+
+#: src/templates/home.html:553
+msgid "5 seconds"
+msgstr "5秒"
+
+#: src/templates/home.html:557
+msgid "15 seconds"
+msgstr "15秒"
+
+#: src/templates/home.html:560
+msgid ""
+"If the selected duration is not supported by the API, it will default to "
+"10 seconds."
+msgstr ""
+
+#: src/templates/home.html:564
+msgid "Upload Image"
+msgstr "上传图片"
+
+#: src/templates/home.html:565
+msgid "Upload an image to generate video from."
+msgstr "上传一张图片以生成视频。"
+
+#: src/templates/home.html:568
+msgid "Supported formats: JPG, PNG, GIF. Recommended size: 800x600px."
+msgstr "支持的格式：JPG、PNG、GIF。推荐尺寸：800×600 像素。"
+
+#: src/templates/home.html:579
+msgid "Submitting request..."
+msgstr "正在提交请求……"
+
+#: src/templates/home.html:580
+msgid "Video generation typically takes 1-5 minutes. Please be patient."
+msgstr "视频生成通常需要1至5分钟，请耐心等待。"
+
+#: src/templates/home.html:585
+msgid "How It Works"
+msgstr "工作原理"
+
+#: src/templates/home.html:588
+msgid "1. Enter Prompt"
+msgstr "1. 输入提示词"
+
+#: src/templates/home.html:589
+msgid "Describe the video you want to generate in detail."
+msgstr "请详细描述您希望生成的视频内容。"
+
+#: src/templates/home.html:592
+msgid "2. Choose Model"
+msgstr "2. 选择模型"
+
+#: src/templates/home.html:593
+msgid "Select the appropriate video generation model."
+msgstr "选择合适的视频生成模型。"
+
+#: src/templates/home.html:596
+msgid "3. Generate Video"
+msgstr "3. 生成视频"
+
+#: src/templates/home.html:597
+msgid "Wait for the AI to generate your video."
+msgstr "请等待AI为您生成视频。"
+
+#: src/templates/home.html:603
+msgid "Video Generation History"
+msgstr "视频生成历史"
+
+#: src/templates/home.html:607 src/templates/home.html:638
+msgid "Model"
+msgstr "模型"
+
+#: src/templates/home.html:609
+msgid "All Models"
+msgstr "所有型号"
+
+#: src/templates/home.html:619
+msgid "Date"
+msgstr "日期"
+
+#: src/templates/home.html:623
+msgid "Keyword"
+msgstr "关键词"
+
+#: src/templates/home.html:624
+msgid "Search in prompt"
+msgstr "在提示词中搜索"
+
+#: src/templates/home.html:627
+msgid "Filter"
+msgstr "筛选器"
+
+#: src/templates/home.html:628
+msgid "Reset"
+msgstr "重置"
+
+#: src/templates/home.html:636
+msgid "Preview"
+msgstr "预览"
+
+#: src/templates/home.html:639
+msgid "Generated At"
+msgstr "生成时间"
+
+#: src/templates/home.html:640
+msgid "Video"
+msgstr "视频"
+
+#: src/templates/home.html:650
+msgid "No Preview"
+msgstr "无预览"
+
+#: src/templates/home.html:659
+msgid "View"
+msgstr "查看"
+
+#: src/templates/home.html:660
+msgid "Download"
+msgstr "下载"
+
+#: src/templates/home.html:663
+msgid "N/A"
+msgstr "不适用"
+
+#: src/templates/home.html:669
+msgid "No video generation history yet."
+msgstr "暂无视频生成记录。"
+
