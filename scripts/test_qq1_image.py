@@ -6,7 +6,7 @@
 import requests
 import os
 
-BASE_URL = 'http://127.0.0.1:5001'
+BASE_URL = 'http://127.0.0.1:8000'
 TEST_USERNAME = 'user'
 TEST_PASSWORD = 'user123'
 
