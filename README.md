@@ -69,7 +69,7 @@
 |---------|------|--------|
 | DASHSCOPE_API_KEY_WAN | 阿里云DashScope WAN模型API密钥 | sk-xxxxxxxxxxxxxxxx |
 | DASHSCOPE_API_KEY_OTHER | 阿里云DashScope其他模型API密钥 | sk-xxxxxxxxxxxxxxxx |
-| VOLCENGINE_API_KEY | 火山引擎API密钥 | 2d80dbf5-6186-40b7-b134-caa2e346ff40 |
+| VOLCENGINE_API_KEY | 火山引擎API密钥 | your_volcengine_api_key_here |
 | VOLCENGINE_API_URL | 火山引擎API URL | https://ark.cn-beijing.volces.com/api/v3/contents/generations/tasks |
 | VOLCENGINE_MODEL_NAME | 火山引擎模型名称 | doubao-seedance-1-5-pro-251215 |
 
