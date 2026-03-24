@@ -404,7 +404,7 @@ def generate_video_aliyun(prompt, model='wan2.5-t2v-preview', image_path=None, d
                             f.write("=== 测试报告 ===\n")
                             f.write(f"测试时间: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
                             f.write(f"时间戳: {timestamp}\n")
-                            f.write(f"API Key: {api_key}\n")
+                            f.write(f"API Key: [REDACTED]\n")
                             f.write(f"API URL: {api_url}\n")
                             f.write(f"Headers: {json.dumps(headers, indent=2)}\n")
                             f.write(f"Payload: {json.dumps(payload, indent=2)}\n")

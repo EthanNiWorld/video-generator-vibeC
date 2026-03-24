@@ -9,7 +9,7 @@ import json
 import dashscope
 
 # 设置API Key
-api_key = 'sk-23151be2c4fe4eeb90fbd698cbe1d40d'
+api_key = os.getenv('DASHSCOPE_API_KEY', '')
 
 # 读取messages.pot文件
 def read_pot_file(file_path):

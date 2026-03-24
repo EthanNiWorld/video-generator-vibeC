@@ -11,7 +11,7 @@ from http import HTTPStatus
 
 # 豆包API配置
 import os
-API_KEY = os.getenv('VOLCENGINE_API_KEY', '2d80dbf5-6186-40b7-b134-caa2e346ff40')
+API_KEY = os.getenv('VOLCENGINE_API_KEY', '')
 API_URL = os.getenv('VOLCENGINE_API_URL', 'https://ark.cn-beijing.volces.com/api/v3/contents/generations/tasks')
 
 # 测试用图片URL（使用真实存在的图片）
