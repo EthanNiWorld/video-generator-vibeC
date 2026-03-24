@@ -62,4 +62,4 @@ if __name__ == '__main__':
     
     # 启动应用
     print(f"启动应用，监听端口: {port}")
-    app.run(debug=True, port=port)
+    app.run(debug=True, port=port, host='0.0.0.0')
