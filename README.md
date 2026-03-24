@@ -21,8 +21,8 @@
 
 1. 克隆仓库
    ```bash
-   git clone https://github.com/EthanNiWorld/video-generator-vibeCoding.git
-   cd video-generator-vibeCoding
+   git clone https://github.com/EthanNiWorld/video-generator-vibeC.git
+   cd video-generator-vibeC
    ```
 
 2. 创建虚拟环境
