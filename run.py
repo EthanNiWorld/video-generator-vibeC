@@ -35,13 +35,9 @@ def get_available_port(port):
             return port
         
         # 检查端口占用情况
-        if check_port_usage(port):
-            # 询问用户是否要继续
-            user_input = input(f"端口 {port} 已被占用，是否继续尝试下一个端口？(y/n): ")
-            if user_input.lower() != 'y':
-                print("退出应用启动")
-                sys.exit(1)
+        check_port_usage(port)
         
+        # 自动尝试下一个端口
         print(f"端口 {port} 已被占用，尝试使用端口 {port + 1}")
         port += 1
 
