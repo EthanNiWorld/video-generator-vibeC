@@ -7,6 +7,27 @@ from flask_babel import Babel
 
 load_dotenv()
 
+# 验证环境变量
+def validate_env_vars():
+    """验证必要的环境变量"""
+    required_vars = [
+        'DASHSCOPE_API_KEY_WAN',
+        'DASHSCOPE_API_KEY_OTHER',
+        'VOLCENGINE_API_KEY'
+    ]
+    
+    missing_vars = []
+    for var in required_vars:
+        if not os.getenv(var):
+            missing_vars.append(var)
+    
+    if missing_vars:
+        print(f"警告: 缺少以下环境变量: {', '.join(missing_vars)}")
+        print("请检查 .env 文件是否正确配置")
+
+# 验证环境变量
+validate_env_vars()
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'

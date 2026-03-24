@@ -6,3 +6,4 @@ python-dotenv
 requests
 pytz
 alibabacloud_oss_v2
+Flask-Babel
